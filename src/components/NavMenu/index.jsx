@@ -28,7 +28,9 @@ function NavMenu() {
                 <Menu.Item key="2">
                     <Link to="/categories">Категории</Link>
                 </Menu.Item>
-                <Menu.Item key="3">Учить слова</Menu.Item>
+                <Menu.Item key="3">
+                    <Link to="/learn">Учить слова</Link>
+                </Menu.Item>
             </Menu>
         </Header>
     );

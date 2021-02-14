@@ -1,27 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import classnames from "classnames";
 
-import { Button } from "../";
+import { Button, Forms } from "../";
 
 function DataTableControlPanel() {
+    const [overlayHidden, setOverlayHidden] = useState(true);
+
     return (
         <div>
             <div
-                id="overlay"
+                className={classnames("overlay", { overlay_hide: overlayHidden })}
                 onClick={() => {
-                    document.getElementById("overlay").style.display = "none";
+                    setOverlayHidden(!overlayHidden);
                 }}
-            >
-                <div id="text">Окно добавления</div>
-            </div>
+            ></div>
+            {!overlayHidden && (
+                <Forms
+                    setOverlayHidden={setOverlayHidden}
+                    overlayHidden={overlayHidden}
+                />
+            )}
             <Button
                 className="words__add"
                 name={"Добавить"}
-                type="primary"
                 icon={<PlusCircleOutlined />}
                 onClick={() => {
-                    document.getElementById("overlay").style.display = "block";
+                    setOverlayHidden(!overlayHidden);
                 }}
             />
             <Button

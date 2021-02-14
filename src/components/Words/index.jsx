@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Layout } from "antd";
+import { useSelector } from "react-redux";
 
 import { DataTable, DataTableControlPanel } from "../";
 
@@ -19,22 +20,14 @@ const columns = [
     },
 ];
 
-const data = [
-    {
-        key: "1",
-        engWord: "age",
-        rusWord: "возраст",
-    },
-    {
-        key: "2",
-        engWord: "figure out",
-        rusWord: "понимать",
-    },
-];
 
 const { Content } = Layout;
 
 const Words = () => {
+    const data = useSelector(({ words }) => {
+        return words.items;
+    });
+
     return (
         <Content className="words">
             <DataTableControlPanel />

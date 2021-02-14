@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Layout } from "antd";
+import { useSelector } from "react-redux";
 
 import { DataTable, DataTableControlPanel } from "../";
 
@@ -24,6 +25,9 @@ const data = [
 const { Content } = Layout;
 
 const Home = () => {
+    const data = useSelector(({ categories }) => {
+        return categories.items;
+    });
     return (
         <Content>
             <DataTableControlPanel />

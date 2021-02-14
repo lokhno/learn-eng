@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Layout } from "antd";
-
-import { NavMenu, Words, Categories } from "../../components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import { NavMenu, Words, Categories, Learn } from "../../components";
 
 import "./Home.scss";
 
@@ -16,9 +16,13 @@ const Home = () => {
                     <Route exact path="/categories">
                         <Categories />
                     </Route>
+                    <Route exact path="/learn">
+                        <Learn />
+                    </Route>
                     <Route path={["/", "/words"]}>
                         <Words />
                     </Route>
+
                 </Switch>
             </Layout>
         </Router>
