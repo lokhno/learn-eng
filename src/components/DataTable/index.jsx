@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 
-import { Radio, Divider, Table } from "antd";
+import { Table } from "antd";
+import { useDispatch } from "react-redux";
+
+import { wordsActions, categoriesActions } from "../../redux/actions";
 
 import "./DataTable.scss";
 
-const DataTable = ({ columns, data }) => {
-    const [selectedItems, setSelectedItems] = useState([]);
+const DataTable = ({ columns, data, objForm }) => {
+    const dispatch = useDispatch();
+
     return (
         <div>
             <Table
                 rowSelection={{
                     type: "checkbox",
                     onChange: (selectedRowKeys) => {
-                        setSelectedItems(selectedRowKeys);
+                        const action =
+                            objForm === "WORDS"
+                                ? wordsActions.setSelectedWords({
+                                      selectedWords: selectedRowKeys,
+                                  })
+                                : categoriesActions.setSelectedCategories({
+                                      selectedCategories: selectedRowKeys,
+                                  });
+                        dispatch(action);
                     },
                 }}
                 className="content"

@@ -1,0 +1,21 @@
+.form {
+    width: 600px;
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 310px);
+    padding: 40px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    label {
+        width: 125px;
+        font-size: 16px;
+    }
+    .ant-form-item-control-input-content{
+        display: flex;
+        justify-content: center;
+    }
+    z-index: 2;
+    &__save-button{
+        margin-right: 10px;
+    }
+}

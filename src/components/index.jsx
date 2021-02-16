@@ -5,4 +5,5 @@ export { default as Words } from "./Words";
 export { default as Button } from "./Button";
 export { default as Learn } from "./Learn";
 export { default as Forms } from "./Forms";
+export { default as CategoryForm } from "./CategoryForm";
 export { default as DataTableControlPanel } from "./DataTableControlPanel";

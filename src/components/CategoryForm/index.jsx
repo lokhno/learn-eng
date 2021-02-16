@@ -3,40 +3,36 @@ import React, { useState } from "react";
 import { Form, Input } from "antd";
 import { useDispatch } from "react-redux";
 
-import { wordsActions } from "../../redux/actions";
+import { categoriesActions } from "../../redux/actions";
 import { Button } from "../";
 
-import "./Forms.scss";
+import "./CategoryForm.scss";
 
-function Forms({ overlayHidden, setOverlayHidden, formTypeInfo, items, selectedItems }) {
-    const [rusWordValue, setRusWordValue] = useState("");
-    const [engWordValue, setEngWordValue] = useState("");
-    console.log("formTypeInfo", formTypeInfo)
+function CategoryForm({
+    overlayHidden,
+    setOverlayHidden,
+    formTypeInfo,
+    items,
+    selectedItems,
+}) {
+    const [categoryTitleValue, setCategoryTitleValue] = useState("");
 
     const dispatch = useDispatch();
 
-    const getSelectedWord = () => {
+    const getSelectedCategory = () => {
         return items.filter((item) => item.key === selectedItems[0])[0];
     };
     return (
         <Form className="form">
-            <Form.Item label="На русском" name="rusWord">
+            <Form.Item label="Название" name="categoryTitle">
                 <Input
                     defaultValue={
-                        formTypeInfo.type === "EDIT" ? getSelectedWord().rusWord : ""
+                        formTypeInfo.type === "EDIT"
+                            ? getSelectedCategory().categoryTitle
+                            : ""
                     }
                     onChange={(e) => {
-                        setRusWordValue(e.target.value);
-                    }}
-                />
-            </Form.Item>
-            <Form.Item label="На английском" name="engWord">
-                <Input
-                    defaultValue={
-                        formTypeInfo.type === "EDIT" ? getSelectedWord().engWord : ""
-                    }
-                    onChange={(e) => {
-                        setEngWordValue(e.target.value);
+                        setCategoryTitleValue(e.target.value);
                     }}
                 />
             </Form.Item>
@@ -47,13 +43,12 @@ function Forms({ overlayHidden, setOverlayHidden, formTypeInfo, items, selectedI
                     name={"Сохранить"}
                     onClick={() => {
                         formTypeInfo.update({
-                            engWord: engWordValue,
-                            rusWord: rusWordValue,
+                            categoryTitle: categoryTitleValue,
                         });
                         if (formTypeInfo.type === "EDIT") {
                             dispatch(
-                                wordsActions.setSelectedWords({
-                                    selectedWords: [],
+                                categoriesActions.setSelectedCategories({
+                                    selectedCategories: [],
                                 })
                             );
                         }
@@ -74,4 +69,4 @@ function Forms({ overlayHidden, setOverlayHidden, formTypeInfo, items, selectedI
     );
 }
 
-export default Forms;
+export default CategoryForm;
