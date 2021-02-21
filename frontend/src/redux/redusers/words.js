@@ -1,15 +1,16 @@
 const initialState = {
-    items: [{ _id: 1, categoryTitle: "Фразовые глаголы", key: "1" }],
-    nextId: 2,
-    selectedCategories: [],
+    items: [
+        { _id: 1, engWord: "age", rusWord: "возраст", key: 1, category: 1 },
+        { _id: 2, engWord: "figure out", rusWord: "понимать", key: 2, category: 1 },
+    ],
+    nextId: 3,
+    selectedWords: [],
 };
-
-
 
 const excludeItems = (state) => {
     return state.items.filter((item) => {
         let suitable = true;
-        state.selectedCategories.forEach((forDelete) => {
+        state.selectedWords.forEach((forDelete) => {
             if (item._id === forDelete) {
                 suitable = false;
             }
@@ -20,7 +21,7 @@ const excludeItems = (state) => {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case "ADD_CATEGORY":
+        case "ADD_WORD":
             return {
                 ...state,
                 items: [
@@ -28,23 +29,25 @@ export default (state = initialState, action) => {
                     {
                         _id: state.nextId,
                         key: state.nextId,
-                        categoryTitle: action.payload.categoryTitle
+                        category: action.payload.category,
+                        engWord: action.payload.engWord,
+                        rusWord: action.payload.rusWord,
                     },
                 ],
                 nextId: state.nextId + 1,
             };
-        case "SET_SELECTED_CATEGORIES":
+        case "SET_SELECTED_WORDS":
             return {
                 ...state,
-                selectedCategories: action.payload.selectedCategories,
+                selectedWords: action.payload.selectedWords,
             };
-        case "DELETE_CATEGORIES":
+        case "DELETE_WORDS":
             return {
                 ...state,
                 items: excludeItems(state),
-                selectedCategories: [],
+                selectedWords: [],
             };
-        case "EDIT_CATEGORY":
+        case "EDIT_WORD":
             return {
                 ...state,
                 items: [
@@ -52,10 +55,10 @@ export default (state = initialState, action) => {
                     {
                         _id: state.nextId,
                         key: state.nextId,
-                        categoryTitle: action.payload.categoryTitle,
+                        engWord: action.payload.engWord,
+                        rusWord: action.payload.rusWord,
                     },
                 ],
-
             };
         default:
             return state;

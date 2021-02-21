@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Layout } from "antd";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -22,7 +22,6 @@ const Home = () => {
                     <Route path={["/", "/words"]}>
                         <Words />
                     </Route>
-
                 </Switch>
             </Layout>
         </Router>

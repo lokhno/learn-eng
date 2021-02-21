@@ -19,6 +19,11 @@ const columns = [
         dataIndex: "engWord",
         key: "engWord",
     },
+    {
+        title: "Категория",
+        dataIndex: "category",
+        key: "category",
+    },
 ];
 
 const { Content } = Layout;
@@ -34,20 +39,22 @@ const Words = () => {
 
     const dispatch = useDispatch();
 
-    const addWord = (item) => {
+    const addWord = ({ engWord, rusWord, category }) => {
         dispatch(
             wordsActions.addWord({
-                engWord: item.engWord,
-                rusWord: item.rusWord,
+                engWord,
+                rusWord,
+                category,
             })
         );
     };
 
-    const editWord = (item) => {
+    const editWord = ({ engWord, rusWord, category }) => {
         dispatch(
             wordsActions.editWord({
-                engWord: item.engWord,
-                rusWord: item.rusWord,
+                engWord,
+                rusWord,
+                category,
             })
         );
     };

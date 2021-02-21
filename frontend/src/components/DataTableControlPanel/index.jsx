@@ -13,6 +13,7 @@ function DataTableControlPanel({
     selectedItems,
     objForm,
 }) {
+    console.log('selectedItems', selectedItems)
     const [overlayHidden, setOverlayHidden] = useState(true);
     const [formType, setFormType] = useState("");
 
