@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Menu, Layout } from "antd";
 import { Link } from "react-router-dom";
@@ -8,11 +8,24 @@ import "./NavMenu.scss";
 const { Header } = Layout;
 
 function NavMenu() {
-    // TODO Пофиксить подсветку вкладок (при перезагрузке и при клике на лого)
+    const [selectedMenuItem, setSelectedMenuItem] = useState(
+        window.location.pathname.includes("categories")
+            ? ["2"]
+            : window.location.pathname.includes("learn")
+            ? ["3"]
+            : ["1"]
+    );
+    console.log(window.location.pathname);
     return (
         <Header className="header">
             <div>
-                <Link className="header__logo" to="/">
+                <Link
+                    className="header__logo"
+                    to="/"
+                    onClick={() => {
+                        setSelectedMenuItem(["1"]);
+                    }}
+                >
                     Learn ENG
                 </Link>
             </div>
@@ -20,7 +33,10 @@ function NavMenu() {
                 className="header__menu"
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={["1"]}
+                selectedKeys={selectedMenuItem}
+                onSelect={(e) => {
+                    setSelectedMenuItem([e.key]);
+                }}
             >
                 <Menu.Item key="1">
                     <Link to="/words">Слова</Link>
