@@ -3,17 +3,16 @@ const actions = {
         type: "ADD_CATEGORY",
         payload: item,
     }),
-    setSelectedCategories: (items) => ({
-        type: "SET_SELECTED_CATEGORIES",
-        payload: items,
-    }),
-    deleteCategories: () => ({
+    deleteCategories: (ids) => ({
         type: "DELETE_CATEGORIES",
+        payload: ids,
     }),
-    editCategory: (item) => ({
-        type: "EDIT_CATEGORY",
-        payload: item,
-    }),
+    editCategory: (item, selectedCategories) => {
+        return {
+            type: "EDIT_CATEGORY",
+            payload: { item, selectedCategories },
+        };
+    },
 };
 
 export default actions;

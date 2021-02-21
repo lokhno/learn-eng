@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,13 +18,11 @@ const columns = [
 
 const { Content } = Layout;
 
-const Home = () => {
+const Categories = () => {
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
     const data = useSelector(({ categories }) => {
         return categories.items;
-    });
-
-    const selectedItems = useSelector(({ categories }) => {
-        return categories.selectedCategories;
     });
 
     const dispatch = useDispatch();
@@ -41,12 +39,12 @@ const Home = () => {
         dispatch(
             categoriesActions.editCategory({
                 categoryTitle: item.categoryTitle,
-            })
+            }, selectedCategories)
         );
     };
 
     const deleteCategories = () => {
-        dispatch(categoriesActions.deleteCategories());
+        dispatch(categoriesActions.deleteCategories(selectedCategories));
     };
 
     return (
@@ -57,11 +55,18 @@ const Home = () => {
                 items={data}
                 onAdd={addCategory}
                 onEdit={editCategory}
-                selectedItems={selectedItems}
+                selectedItems={selectedCategories}
+                setSelectedItems={setSelectedCategories}
             />
-            <DataTable columns={columns} data={data} objForm="CATEGORIES" />
+            <DataTable
+                columns={columns}
+                data={data}
+                selectedItems={selectedCategories}
+                setSelectedItems={setSelectedCategories}
+                objForm="CATEGORIES"
+            />
         </Content>
     );
 };
 
-export default Home;
+export default Categories;

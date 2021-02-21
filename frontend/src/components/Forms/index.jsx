@@ -78,18 +78,13 @@ function Forms({ overlayHidden, setOverlayHidden, formTypeInfo, items, selectedI
                     className="form__save-button"
                     name={"Сохранить"}
                     onClick={() => {
+                        
                         formTypeInfo.update({
                             engWord: engWordValue,
                             rusWord: rusWordValue,
                             category: category,
                         });
-                        if (formTypeInfo.type === "EDIT") {
-                            dispatch(
-                                wordsActions.setSelectedWords({
-                                    selectedWords: [],
-                                })
-                            );
-                        }
+
                         setOverlayHidden(!overlayHidden);
                     }}
                     type="primary"

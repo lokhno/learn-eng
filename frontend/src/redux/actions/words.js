@@ -3,16 +3,13 @@ const actions = {
         type: "ADD_WORD",
         payload: item,
     }),
-    setSelectedWords: (items) => ({
-        type: "SET_SELECTED_WORDS",
-        payload: items,
+    deleteWords: (ids) => ({
+        type: "DELETE_WORDS",
+        payload: ids,
     }),
-    deleteWords: () => ({
-        type: "DELETE_WORDS"
-    }),
-    editWord: (item) => ({
+    editWord: (item, selectedWords) => ({
         type: "EDIT_WORD",
-        payload: item,
+        payload: { item, selectedWords },
     }),
 };
 

@@ -1,15 +1,12 @@
 const initialState = {
     items: [{ _id: 1, categoryTitle: "Фразовые глаголы", key: 1 }],
     nextId: 2,
-    selectedCategories: [],
 };
 
-
-
-const excludeItems = (state) => {
+const excludeItems = (state, selectedCategories) => {
     return state.items.filter((item) => {
         let suitable = true;
-        state.selectedCategories.forEach((forDelete) => {
+        selectedCategories.forEach((forDelete) => {
             if (item._id === forDelete) {
                 suitable = false;
             }
@@ -28,34 +25,27 @@ export default (state = initialState, action) => {
                     {
                         _id: state.nextId,
                         key: state.nextId,
-                        categoryTitle: action.payload.categoryTitle
+                        categoryTitle: action.payload.categoryTitle,
                     },
                 ],
                 nextId: state.nextId + 1,
             };
-        case "SET_SELECTED_CATEGORIES":
-            return {
-                ...state,
-                selectedCategories: action.payload.selectedCategories,
-            };
         case "DELETE_CATEGORIES":
             return {
                 ...state,
-                items: excludeItems(state),
-                selectedCategories: [],
+                items: excludeItems(state, action.payload),
             };
         case "EDIT_CATEGORY":
             return {
                 ...state,
                 items: [
-                    ...excludeItems(state),
+                    ...excludeItems(state, action.payload.selectedCategories),
                     {
-                        _id: state.nextId,
-                        key: state.nextId,
-                        categoryTitle: action.payload.categoryTitle,
+                        _id: action.payload.selectedCategories[0],
+                        key: action.payload.selectedCategories[0],
+                        categoryTitle: action.payload.item.categoryTitle,
                     },
                 ],
-
             };
         default:
             return state;

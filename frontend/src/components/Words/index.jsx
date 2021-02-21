@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,12 +29,10 @@ const columns = [
 const { Content } = Layout;
 
 const Words = () => {
+    const [selectedWords, setSelectedWords] = useState([]);
+
     const data = useSelector(({ words }) => {
         return words.items;
-    });
-
-    const selectedItems = useSelector(({ words }) => {
-        return words.selectedWords;
     });
 
     const dispatch = useDispatch();
@@ -50,17 +48,20 @@ const Words = () => {
     };
 
     const editWord = ({ engWord, rusWord, category }) => {
+
         dispatch(
             wordsActions.editWord({
                 engWord,
                 rusWord,
                 category,
-            })
+            }, selectedWords)
         );
+        setSelectedWords([])
     };
 
     const deleteWords = () => {
-        dispatch(wordsActions.deleteWords());
+        dispatch(wordsActions.deleteWords(selectedWords));
+        setSelectedWords([])
     };
 
     return (
@@ -71,9 +72,15 @@ const Words = () => {
                 items={data}
                 onAdd={addWord}
                 onEdit={editWord}
-                selectedItems={selectedItems}
+                selectedItems={selectedWords}
             />
-            <DataTable columns={columns} data={data} objForm="WORDS" />
+            <DataTable
+                columns={columns}
+                data={data}
+                selectedItems={selectedWords}
+                setSelectedItems={setSelectedWords}
+                objForm="WORDS"
+            />
         </Content>
     );
 };

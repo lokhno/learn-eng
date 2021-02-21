@@ -4,13 +4,12 @@ const initialState = {
         { _id: 2, engWord: "figure out", rusWord: "понимать", key: 2, category: 1 },
     ],
     nextId: 3,
-    selectedWords: [],
 };
 
-const excludeItems = (state) => {
+const excludeItems = (state, selectedWords) => {
     return state.items.filter((item) => {
         let suitable = true;
-        state.selectedWords.forEach((forDelete) => {
+        selectedWords.forEach((forDelete) => {
             if (item._id === forDelete) {
                 suitable = false;
             }
@@ -20,6 +19,7 @@ const excludeItems = (state) => {
 };
 
 export default (state = initialState, action) => {
+    console.log("action", action)
     switch (action.type) {
         case "ADD_WORD":
             return {
@@ -36,27 +36,21 @@ export default (state = initialState, action) => {
                 ],
                 nextId: state.nextId + 1,
             };
-        case "SET_SELECTED_WORDS":
-            return {
-                ...state,
-                selectedWords: action.payload.selectedWords,
-            };
         case "DELETE_WORDS":
             return {
                 ...state,
-                items: excludeItems(state),
-                selectedWords: [],
+                items: excludeItems(state, action.payload),
             };
         case "EDIT_WORD":
             return {
                 ...state,
                 items: [
-                    ...excludeItems(state),
+                    ...excludeItems(state, action.payload.selectedWords),
                     {
-                        _id: state.nextId,
-                        key: state.nextId,
-                        engWord: action.payload.engWord,
-                        rusWord: action.payload.rusWord,
+                        _id: action.payload.selectedWords[0],
+                        key: action.payload.selectedWords[0],
+                        engWord: action.payload.item.engWord,
+                        rusWord: action.payload.item.rusWord,
                     },
                 ],
             };

@@ -12,8 +12,9 @@ function DataTableControlPanel({
     onEdit,
     selectedItems,
     objForm,
+    setSelectedItems,
 }) {
-    console.log('selectedItems', selectedItems)
+    console.log("selectedItems", selectedItems);
     const [overlayHidden, setOverlayHidden] = useState(true);
     const [formType, setFormType] = useState("");
 
@@ -47,6 +48,7 @@ function DataTableControlPanel({
                         }}
                         items={items}
                         selectedItems={selectedItems}
+                        setSelectedItems={setSelectedItems}
                     />
                 ))}
             <Button

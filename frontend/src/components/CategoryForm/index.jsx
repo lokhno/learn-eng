@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
 import { Form, Input } from "antd";
-import { useDispatch } from "react-redux";
 
-import { categoriesActions } from "../../redux/actions";
 import { Button } from "../";
 
 import "./CategoryForm.scss";
@@ -14,10 +12,9 @@ function CategoryForm({
     formTypeInfo,
     items,
     selectedItems,
+    setSelectedItems,
 }) {
     const [categoryTitleValue, setCategoryTitleValue] = useState("");
-
-    const dispatch = useDispatch();
 
     const getSelectedCategory = () => {
         return items.filter((item) => item.key === selectedItems[0])[0];
@@ -45,13 +42,7 @@ function CategoryForm({
                         formTypeInfo.update({
                             categoryTitle: categoryTitleValue,
                         });
-                        if (formTypeInfo.type === "EDIT") {
-                            dispatch(
-                                categoriesActions.setSelectedCategories({
-                                    selectedCategories: [],
-                                })
-                            );
-                        }
+                        setSelectedItems([]);
                         setOverlayHidden(!overlayHidden);
                     }}
                     type="primary"
