@@ -1,5 +1,5 @@
 const initialState = {
-    items: [{ _id: 1, categoryTitle: "Фразовые глаголы", key: 1 }],
+    items: [{ _id: 1, title: "Фразовые глаголы", key: 1 }],
     nextId: 2,
 };
 
@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
                     {
                         _id: state.nextId,
                         key: state.nextId,
-                        categoryTitle: action.payload.categoryTitle,
+                        title: action.payload.title,
                     },
                 ],
                 nextId: state.nextId + 1,
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
                     {
                         _id: action.payload.selectedCategories[0],
                         key: action.payload.selectedCategories[0],
-                        categoryTitle: action.payload.item.categoryTitle,
+                        title: action.payload.item.title,
                     },
                 ],
             };

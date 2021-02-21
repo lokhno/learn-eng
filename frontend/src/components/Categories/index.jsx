@@ -11,8 +11,8 @@ import "./Categories.scss";
 const columns = [
     {
         title: "Название",
-        dataIndex: "categoryTitle",
-        key: "categoryTitle",
+        dataIndex: "title",
+        key: "title",
     },
 ];
 
@@ -20,26 +20,45 @@ const { Content } = Layout;
 
 const Categories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [titleInForm, setTitleInForm] = useState("");
 
-    const data = useSelector(({ categories }) => {
+    const categories = useSelector(({ categories }) => {
         return categories.items;
     });
 
+    const formFields = [
+        {
+            title: "Название",
+            dataIndex: "title",
+            key: "title",
+            info: { type: "input" },
+            valueInForm: titleInForm,
+            onChangeValue: (e) => {
+                setTitleInForm(e.target.value);
+            },
+            focus: true,
+        },
+    ];
+
     const dispatch = useDispatch();
 
-    const addCategory = (item) => {
+    const addCategory = () => {
         dispatch(
             categoriesActions.addCategory({
-                categoryTitle: item.categoryTitle,
+                title: formFields.filter((item) => item.key == "title")[0].valueInForm,
             })
         );
     };
 
-    const editCategory = (item) => {
+    const editCategory = () => {
         dispatch(
-            categoriesActions.editCategory({
-                categoryTitle: item.categoryTitle,
-            }, selectedCategories)
+            categoriesActions.editCategory(
+                {
+                    title: formFields.filter((item) => item.key == "title")[0]
+                        .valueInForm,
+                },
+                selectedCategories
+            )
         );
     };
 
@@ -50,20 +69,18 @@ const Categories = () => {
     return (
         <Content>
             <DataTableControlPanel
-                objForm="CATEGORIES"
                 onDelete={deleteCategories}
-                items={data}
+                items={categories}
                 onAdd={addCategory}
                 onEdit={editCategory}
                 selectedItems={selectedCategories}
-                setSelectedItems={setSelectedCategories}
+                formFields={formFields}
             />
             <DataTable
                 columns={columns}
-                data={data}
+                data={categories}
                 selectedItems={selectedCategories}
                 setSelectedItems={setSelectedCategories}
-                objForm="CATEGORIES"
             />
         </Content>
     );

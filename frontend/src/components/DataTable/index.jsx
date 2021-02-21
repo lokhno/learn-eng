@@ -8,6 +8,7 @@ const DataTable = ({ columns, data, selectedItems, setSelectedItems }) => {
     return (
         <div>
             <Table
+                className="content"
                 rowSelection={{
                     selectedRowKeys: selectedItems,
                     type: "checkbox",
@@ -15,7 +16,6 @@ const DataTable = ({ columns, data, selectedItems, setSelectedItems }) => {
                         setSelectedItems(selectedRowKeys);
                     },
                 }}
-                className="content"
                 columns={columns}
                 dataSource={data}
                 pagination={{

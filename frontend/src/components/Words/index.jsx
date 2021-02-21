@@ -8,6 +8,8 @@ import { wordsActions } from "../../redux/actions";
 
 import "./Words.scss";
 
+const { Content } = Layout;
+
 const columns = [
     {
         title: "Слово на русском",
@@ -26,60 +28,106 @@ const columns = [
     },
 ];
 
-const { Content } = Layout;
-
 const Words = () => {
     const [selectedWords, setSelectedWords] = useState([]);
+    const [rusWordValueInForm, setRusWordValueInForm] = useState("");
+    const [engWordValueInForm, setEngWordValueInForm] = useState("");
+    const [categoryInForm, setCategoryInForm] = useState("");
 
-    const data = useSelector(({ words }) => {
+    const words = useSelector(({ words }) => {
         return words.items;
     });
+    const categories = useSelector(({ categories }) => {
+        return categories.items;
+    });
+
+    const formFields = [
+        {
+            title: "На русском",
+            dataIndex: "rusWord",
+            key: "rusWord",
+            info: { type: "input" },
+            valueInForm: rusWordValueInForm,
+            onChangeValue: (e) => {
+                setRusWordValueInForm(e.target.value);
+            },
+            focus: true,
+        },
+        {
+            title: "На английском",
+            dataIndex: "engWord",
+            key: "engWord",
+            info: { type: "input" },
+            valueInForm: engWordValueInForm,
+            onChangeValue: (e) => {
+                setEngWordValueInForm(e.target.value);
+            },
+        },
+        {
+            title: "Категория",
+            dataIndex: "category",
+            key: "category",
+            info: { type: "select", items: categories },
+            valueInForm: categoryInForm,
+            onChangeValue: (value, categoryInfo) => {
+                setCategoryInForm(categoryInfo.key);
+            },
+        },
+    ];
 
     const dispatch = useDispatch();
 
-    const addWord = ({ engWord, rusWord, category }) => {
+    const addWord = () => {
         dispatch(
             wordsActions.addWord({
-                engWord,
-                rusWord,
-                category,
+                engWord: formFields.filter((item) => item.key == "engWord")[0]
+                    .valueInForm,
+                rusWord: formFields.filter((item) => item.key == "rusWord")[0]
+                    .valueInForm,
+                category: formFields.filter((item) => item.key == "category")[0]
+                    .valueInForm,
             })
         );
     };
 
-    const editWord = ({ engWord, rusWord, category }) => {
-
+    const editWord = () => {
         dispatch(
-            wordsActions.editWord({
-                engWord,
-                rusWord,
-                category,
-            }, selectedWords)
+            wordsActions.editWord(
+                {
+                    engWord: formFields.filter((item) => item.key == "engWord")[0]
+                        .valueInForm,
+                    rusWord: formFields.filter((item) => item.key == "rusWord")[0]
+                        .valueInForm,
+                    category: formFields.filter((item) => item.key == "category")[0]
+                        .valueInForm,
+                },
+                selectedWords
+            )
         );
-        setSelectedWords([])
+        setSelectedWords([]);
     };
 
     const deleteWords = () => {
         dispatch(wordsActions.deleteWords(selectedWords));
-        setSelectedWords([])
+        setSelectedWords([]);
     };
 
+
     return (
-        <Content className="words">
+        <Content>
             <DataTableControlPanel
-                objForm="WORDS"
                 onDelete={deleteWords}
-                items={data}
+                items={words}
                 onAdd={addWord}
                 onEdit={editWord}
                 selectedItems={selectedWords}
+                formFields={formFields}
             />
             <DataTable
                 columns={columns}
-                data={data}
+                data={words}
                 selectedItems={selectedWords}
                 setSelectedItems={setSelectedWords}
-                objForm="WORDS"
             />
         </Content>
     );

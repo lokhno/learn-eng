@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import classnames from "classnames";
 
-import { Button, Forms, CategoryForm } from "../";
+import { Button, Forms } from "../";
 
 function DataTableControlPanel({
     onDelete,
@@ -11,10 +11,8 @@ function DataTableControlPanel({
     onAdd,
     onEdit,
     selectedItems,
-    objForm,
-    setSelectedItems,
+    formFields,
 }) {
-    console.log("selectedItems", selectedItems);
     const [overlayHidden, setOverlayHidden] = useState(true);
     const [formType, setFormType] = useState("");
 
@@ -26,31 +24,19 @@ function DataTableControlPanel({
                     setOverlayHidden(!overlayHidden);
                 }}
             ></div>
-            {!overlayHidden &&
-                (objForm === "WORDS" ? (
-                    <Forms
-                        setOverlayHidden={setOverlayHidden}
-                        overlayHidden={overlayHidden}
-                        formTypeInfo={{
-                            type: formType,
-                            update: formType === "EDIT" ? onEdit : onAdd,
-                        }}
-                        items={items}
-                        selectedItems={selectedItems}
-                    />
-                ) : (
-                    <CategoryForm
-                        setOverlayHidden={setOverlayHidden}
-                        overlayHidden={overlayHidden}
-                        formTypeInfo={{
-                            type: formType,
-                            update: formType === "EDIT" ? onEdit : onAdd,
-                        }}
-                        items={items}
-                        selectedItems={selectedItems}
-                        setSelectedItems={setSelectedItems}
-                    />
-                ))}
+            {!overlayHidden && (
+                <Forms
+                    formFields={formFields}
+                    setOverlayHidden={setOverlayHidden}
+                    overlayHidden={overlayHidden}
+                    formTypeInfo={{
+                        type: formType,
+                        update: formType === "EDIT" ? onEdit : onAdd,
+                    }}
+                    items={items}
+                    selectedItems={selectedItems}
+                />
+            )}
             <Button
                 className="words__add"
                 name={"Добавить"}
@@ -61,8 +47,8 @@ function DataTableControlPanel({
                 }}
             />
             <Button
-                disabled={!(selectedItems.length === 1)}
                 className="words__add"
+                disabled={!(selectedItems.length === 1)}
                 name={"Редактировать"}
                 type="primary"
                 icon={<EditOutlined />}
