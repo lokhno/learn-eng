@@ -6,6 +6,7 @@ import classnames from "classnames";
 import "./Button.scss";
 
 function Button({ icon, name, className, onClick, disabled }) {
+
     return (
         <AntButton
             className={classnames(className, "button_size")}

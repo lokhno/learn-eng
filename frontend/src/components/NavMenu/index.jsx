@@ -15,7 +15,6 @@ function NavMenu() {
             ? ["3"]
             : ["1"]
     );
-    console.log(window.location.pathname);
     return (
         <Header className="header">
             <div>

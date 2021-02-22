@@ -3,36 +3,20 @@ import React, { useState } from "react";
 import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
-import { DataTable, DataTableControlPanel } from "../";
+import { DataTable, DataTableControlPanel, Button } from "../";
 import { wordsActions } from "../../redux/actions";
 
 import "./Words.scss";
 
 const { Content } = Layout;
 
-const columns = [
-    {
-        title: "Слово на русском",
-        dataIndex: "rusWord",
-        key: "rusWord",
-    },
-    {
-        title: "Слово на английском",
-        dataIndex: "engWord",
-        key: "engWord",
-    },
-    {
-        title: "Категория",
-        dataIndex: "category",
-        key: "category",
-    },
-];
-
 const Words = () => {
     const [selectedWords, setSelectedWords] = useState([]);
     const [rusWordValueInForm, setRusWordValueInForm] = useState("");
     const [engWordValueInForm, setEngWordValueInForm] = useState("");
     const [categoryInForm, setCategoryInForm] = useState("");
+    const [isOpenItemsRus, setIsOpenItemsRus] = useState(false);
+    const [isOpenItemsEng, setIsOpenItemsEng] = useState(false);
 
     const words = useSelector(({ words }) => {
         return words.items;
@@ -40,6 +24,88 @@ const Words = () => {
     const categories = useSelector(({ categories }) => {
         return categories.items;
     });
+    console.log("setIsOpenItemsEng", setIsOpenItemsEng)
+    console.log("setIsOpenItemsRus", setIsOpenItemsRus)
+
+    const columns = [
+        {
+            title: () => {
+                return (
+                    <div className="with-button">
+                        Слово на русском{" "}
+                        
+                        <Button
+                            disabled={isOpenItemsEng}
+                            name={!isOpenItemsRus ? "Скрыть" : "Открыть"}
+                            onClick={() => {
+                                setIsOpenItemsRus(!isOpenItemsRus);
+                            }}
+                        />
+                    </div>
+                );
+            },
+
+            dataIndex: "rusWord",
+            key: "rusWord",
+            input: isOpenItemsRus,
+            checkvalue: (e, record, setIsCorrect) => {
+                if (e.target.value === "") {
+                    setIsCorrect(0);
+                } else {
+                    if (
+                        e.target.value.toLocaleLowerCase() ===
+                        record.rusWord.toLocaleLowerCase()
+                    ) {
+                        console.log("Верно");
+                        setIsCorrect(1);
+                    } else {
+                        setIsCorrect(-1);
+                    }
+                }
+            },
+            width: "30%",
+        },
+        {
+            title: () => {
+                return (
+                    <div className="with-button">
+                        Слово на английском{" "}
+                        <Button
+                        disabled={isOpenItemsRus}
+                            name={!isOpenItemsEng ? "Скрыть" : "Открыть"}
+                            onClick={() => {
+                                setIsOpenItemsEng(!isOpenItemsEng);
+                            }}
+                        />
+                    </div>
+                );
+            },
+            dataIndex: "engWord",
+            key: "engWord",
+            input: isOpenItemsEng,
+            checkvalue: (e, record, setIsCorrect) => {
+                if (e.target.value === "") {
+                    setIsCorrect(0);
+                } else {
+                    if (
+                        e.target.value.toLocaleLowerCase() ===
+                        record.engWord.toLocaleLowerCase()
+                    ) {
+                        console.log("Верно");
+                        setIsCorrect(1);
+                    } else {
+                        setIsCorrect(-1);
+                    }
+                }
+            },
+            width: "30%",
+        },
+        {
+            title: "Категория",
+            dataIndex: "category",
+            key: "category",
+        },
+    ];
 
     const formFields = [
         {
@@ -112,7 +178,6 @@ const Words = () => {
         setSelectedWords([]);
     };
 
-
     return (
         <Content>
             <DataTableControlPanel
@@ -125,6 +190,7 @@ const Words = () => {
             />
             <DataTable
                 columns={columns}
+                isOpenItems={isOpenItemsRus || isOpenItemsEng}
                 data={words}
                 selectedItems={selectedWords}
                 setSelectedItems={setSelectedWords}

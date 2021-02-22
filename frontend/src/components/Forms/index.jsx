@@ -21,9 +21,10 @@ function Forms({
 
     return (
         <Form className="form">
-            {formFields.map((field) => {
+            {formFields.map((field, index) => {
                 return (
                     <FormItem
+                        key={index}
                         info={field.info}
                         lable={field.title}
                         defaultValue={
