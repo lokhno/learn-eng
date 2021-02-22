@@ -34,7 +34,11 @@ const Categories = () => {
             info: { type: "input" },
             valueInForm: titleInForm,
             onChangeValue: (e) => {
-                setTitleInForm(e.target.value);
+                if (e.target) {
+                    setTitleInForm(e.target.value);
+                } else {
+                    setTitleInForm(e);
+                }
             },
             focus: true,
         },

@@ -1,6 +1,9 @@
 const initialState = {
-    items: [{ _id: 1, title: "Фразовые глаголы", key: 1 }],
-    nextId: 2,
+    items: [
+        { _id: 1, title: "Фразовые глаголы", key: 1 },
+        { _id: 2, title: "Новые", key: 2 },
+    ],
+    nextId: 3,
 };
 
 const excludeItems = (state, selectedCategories) => {

@@ -24,8 +24,6 @@ const Words = () => {
     const categories = useSelector(({ categories }) => {
         return categories.items;
     });
-    console.log("setIsOpenItemsEng", setIsOpenItemsEng)
-    console.log("setIsOpenItemsRus", setIsOpenItemsRus)
 
     const columns = [
         {
@@ -33,7 +31,6 @@ const Words = () => {
                 return (
                     <div className="with-button">
                         Слово на русском{" "}
-                        
                         <Button
                             disabled={isOpenItemsEng}
                             name={!isOpenItemsRus ? "Скрыть" : "Открыть"}
@@ -71,7 +68,7 @@ const Words = () => {
                     <div className="with-button">
                         Слово на английском{" "}
                         <Button
-                        disabled={isOpenItemsRus}
+                            disabled={isOpenItemsRus}
                             name={!isOpenItemsEng ? "Скрыть" : "Открыть"}
                             onClick={() => {
                                 setIsOpenItemsEng(!isOpenItemsEng);
@@ -115,7 +112,11 @@ const Words = () => {
             info: { type: "input" },
             valueInForm: rusWordValueInForm,
             onChangeValue: (e) => {
-                setRusWordValueInForm(e.target.value);
+                if (e.target) {
+                    setRusWordValueInForm(e.target.value);
+                } else {
+                    setRusWordValueInForm(e);
+                }
             },
             focus: true,
         },
@@ -126,7 +127,11 @@ const Words = () => {
             info: { type: "input" },
             valueInForm: engWordValueInForm,
             onChangeValue: (e) => {
-                setEngWordValueInForm(e.target.value);
+                if (e.target) {
+                    setEngWordValueInForm(e.target.value);
+                } else {
+                    setEngWordValueInForm(e);
+                }
             },
         },
         {
@@ -135,8 +140,12 @@ const Words = () => {
             key: "category",
             info: { type: "select", items: categories },
             valueInForm: categoryInForm,
-            onChangeValue: (value, categoryInfo) => {
-                setCategoryInForm(categoryInfo.key);
+            onChangeValue: (v, categoryInfo) => {
+                if (categoryInfo) {
+                    setCategoryInForm(categoryInfo.key);
+                } else {
+                    setCategoryInForm(v);
+                }
             },
         },
     ];

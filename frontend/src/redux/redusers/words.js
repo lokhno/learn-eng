@@ -48,6 +48,7 @@ export default (state = initialState, action) => {
                     {
                         _id: action.payload.selectedWords[0],
                         key: action.payload.selectedWords[0],
+                        category: action.payload.item.category,
                         engWord: action.payload.item.engWord,
                         rusWord: action.payload.item.rusWord,
                     },
