@@ -1,0 +1,28 @@
+.auth-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.auth {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 350px;
+    border-radius: 5px;
+    background-color: #ececec;
+    align-items: center;
+    justify-content: center;
+    &__item {
+        width: 85%;
+        margin-bottom: 1px;
+        label {
+            width: 425px;
+        }
+    }
+    &__button {
+        margin-top: 20px;
+        width: 425px;
+        height: 35px;
+    }
+}

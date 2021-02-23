@@ -1,13 +1,32 @@
-import { Home } from "./pages";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import './App.scss'
+import { Home, Registration, Auth } from "./pages";
+
+import "./App.scss";
 
 function App() {
     return (
-        <div>
-            
-            <Home />
-        </div>
+        <Router>
+            <div>
+                <Switch>
+                    <Route exact path="/registration">
+                        <Registration />
+                    </Route>
+                    <Route exact path="/auth">
+                        <Auth />
+                    </Route>
+                    <Route exact path="/categories">
+                        <Home />
+                    </Route>
+                    <Route exact path="/learn">
+                        <Home />
+                    </Route>
+                    <Route path={["/", "/words"]}>
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 

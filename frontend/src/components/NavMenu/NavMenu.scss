@@ -1,6 +1,10 @@
 .header {
     display: flex;
     padding: 0;
+    justify-content: space-between;
+    &__logo-menu {
+        display: flex;
+    }
     &__logo {
         color: #fff;
         font-size: 20px;
@@ -14,5 +18,4 @@
             color: #fff;
         }
     }
-
 }
