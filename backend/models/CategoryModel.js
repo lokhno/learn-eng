@@ -7,6 +7,7 @@ const CategorySchema = new Schema(
         title: { type: String, required: true },
         edit_on: Date,
         create_on: Date,
+        author: { type: Schema.Types.ObjectId, ref: "User" },
     },
     { collection: "category" }
 );

@@ -6,6 +6,7 @@ class CategoryCtrl {
             title: req.body.title,
             create_on: new Date(),
             edit_on: new Date(),
+            author: req.body.author_id,
         };
         new CategoryModel(data)
             .save()
@@ -17,8 +18,8 @@ class CategoryCtrl {
             });
     };
     read = (req, res) => {
-        const id = req.params.id;
-        CategoryModel.find({ _id: id }).exec(function (err, messages) {
+        const id = req.params.userid;
+        CategoryModel.find({ author: id }).populate(["author"]).exec(function (err, messages) {
             if (err) {
                 return res.status(404).json({ message: `Message not found` });
             }
