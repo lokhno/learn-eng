@@ -55,8 +55,10 @@ function DataTableControlPanel({
                 onClick={() => {
                     setOverlayHidden(!overlayHidden);
                     setFormType("EDIT");
-                    formFields.forEach(element => {
-                        element.onChangeValue(items.filter((item) => item.key === selectedItems[0])[0][element.key])
+                    formFields.forEach((element) => {
+                        element.onChangeValue(
+                            items.filter((item) => item._id === selectedItems[0])[0]
+                        );
                     });
                 }}
             />

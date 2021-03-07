@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,9 @@ const { Content } = Layout;
 const Categories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [titleInForm, setTitleInForm] = useState("");
+    useEffect(() => {
+        dispatch(categoriesActions.fetchCategories("60414c9fdeefc965c8df5b6a"));
+    }, []);
 
     const categories = useSelector(({ categories }) => {
         return categories.items;
@@ -48,7 +51,7 @@ const Categories = () => {
 
     const addCategory = () => {
         dispatch(
-            categoriesActions.addCategory({
+            categoriesActions.fetchAddCategories({
                 title: formFields.filter((item) => item.key == "title")[0].valueInForm,
             })
         );
@@ -67,7 +70,7 @@ const Categories = () => {
     };
 
     const deleteCategories = () => {
-        dispatch(categoriesActions.deleteCategories(selectedCategories));
+        dispatch(categoriesActions.fetchDeleteCategory(selectedCategories));
     };
 
     return (

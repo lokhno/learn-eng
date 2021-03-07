@@ -1,9 +1,10 @@
 const initialState = {
     items: [
-        { _id: 1, title: "Фразовые глаголы", key: 1 },
-        { _id: 2, title: "Новые", key: 2 },
+        // { _id: 1, title: "Фразовые глаголы", key: 1 },
+        // { _id: 2, title: "Новые", key: 2 },
     ],
     nextId: 3,
+    isLoaded: false,
 };
 
 const excludeItems = (state, selectedCategories) => {
@@ -49,6 +50,17 @@ export default (state = initialState, action) => {
                         title: action.payload.item.title,
                     },
                 ],
+            };
+        case "SET_CATEGORIES":
+            return {
+                ...state,
+                items: action.payload,
+                isLoaded: false,
+            };
+        case "SET_IS_LOADING":
+            return {
+                ...state,
+                isLoaded: action.payload,
             };
         default:
             return state;

@@ -11,7 +11,7 @@ function FormItem({ info, lable, defaultValue, onChange, focus }) {
                 <Input autoFocus={focus} defaultValue={defaultValue} onChange={onChange} />
             ) : info.type == "select" ? (
                 <Select
-                    defaultValue={defaultValue}
+                    defaultValue={defaultValue.title}
                     showSearch
                     style={{ width: 395 }}
                     placeholder=""

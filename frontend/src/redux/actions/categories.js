@@ -1,7 +1,9 @@
+import { categoriesApi } from "../../utils/api";
+
 const actions = {
-    addCategory: (item) => ({
-        type: "ADD_CATEGORY",
-        payload: item,
+    setCategories: (items) => ({
+        type: "SET_CATEGORIES",
+        payload: items,
     }),
     deleteCategories: (ids) => ({
         type: "DELETE_CATEGORIES",
@@ -13,6 +15,38 @@ const actions = {
             payload: { item, selectedCategories },
         };
     },
+    setIsLoading: (bool) => ({
+        type: "SET_IS_LOADING",
+        payload: bool,
+    }),
+    fetchAddCategories: (item) => (dispatch) => {
+        categoriesApi.createCategory(item).then(({ data }) => {
+            dispatch(actions.addCategory(data));
+        });
+    },
+    fetchDeleteCategory: (ids) => (dispatch) => {
+        ids.forEach((id) => {
+            categoriesApi.deleteCategory(id).then(({ data }) => {
+                dispatch(actions.deleteCategories([id]));
+            });
+        });
+    },
+    fetchCategories: (userId) => (dispatch) => {
+        dispatch(actions.setIsLoading(true));
+        categoriesApi
+            .getAllByUserId(userId)
+            .then(({ data }) => {
+                dispatch(actions.setCategories(data));
+            })
+            .catch(() => {
+                dispatch(actions.setIsLoading(false));
+            });
+    },
+
+    addCategory: (item) => ({
+        type: "ADD_CATEGORY",
+        payload: item,
+    }),
 };
 
 export default actions;

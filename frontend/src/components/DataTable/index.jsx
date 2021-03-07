@@ -36,6 +36,7 @@ const DataTable = ({ columns, data, selectedItems, setSelectedItems, isOpenItems
             components={isOpenItems ? components : false}
             bordered
             className="content"
+            rowKey="_id"
             rowSelection={{
                 selectedRowKeys: selectedItems,
                 type: "checkbox",

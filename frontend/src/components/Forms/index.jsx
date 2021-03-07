@@ -16,9 +16,9 @@ function Forms({
     formFields,
 }) {
     const getSelectedItem = (key) => {
-        return items.filter((item) => item.key === selectedItems[0])[0][key];
-    };
 
+        return items.filter((item) => item._id === selectedItems[0])[0][key];
+    };
     return (
         <Form className="form">
             {formFields.map((field, index) => {

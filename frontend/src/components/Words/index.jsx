@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +17,10 @@ const Words = () => {
     const [categoryInForm, setCategoryInForm] = useState("");
     const [isOpenItemsRus, setIsOpenItemsRus] = useState(false);
     const [isOpenItemsEng, setIsOpenItemsEng] = useState(false);
+
+    useEffect(() => {
+        dispatch(wordsActions.fetchWords("60414c9fdeefc965c8df5b6a"));
+    }, []);
 
     const words = useSelector(({ words }) => {
         return words.items;
@@ -53,7 +57,6 @@ const Words = () => {
                         e.target.value.toLocaleLowerCase() ===
                         record.rusWord.toLocaleLowerCase()
                     ) {
-                        console.log("Верно");
                         setIsCorrect(1);
                     } else {
                         setIsCorrect(-1);
@@ -88,7 +91,6 @@ const Words = () => {
                         e.target.value.toLocaleLowerCase() ===
                         record.engWord.toLocaleLowerCase()
                     ) {
-                        console.log("Верно");
                         setIsCorrect(1);
                     } else {
                         setIsCorrect(-1);
@@ -99,7 +101,7 @@ const Words = () => {
         },
         {
             title: "Категория",
-            dataIndex: "category",
+            dataIndex: ["category", "title"],
             key: "category",
         },
     ];

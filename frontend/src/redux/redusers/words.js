@@ -1,9 +1,10 @@
 const initialState = {
     items: [
-        { _id: 1, engWord: "age", rusWord: "возраст", key: 1, category: 1 },
-        { _id: 2, engWord: "figure out", rusWord: "понимать", key: 2, category: 1 },
+        // { _id: 1, engWord: "age", rusWord: "возраст", key: 1, category: 1 },
+        // { _id: 2, engWord: "figure out", rusWord: "понимать", key: 2, category: 1 },
     ],
     nextId: 3,
+    isLoaded: false,
 };
 
 const excludeItems = (state, selectedWords) => {
@@ -53,6 +54,17 @@ export default (state = initialState, action) => {
                         rusWord: action.payload.item.rusWord,
                     },
                 ],
+            };
+        case "SET_WORDS":
+            return {
+                ...state,
+                items: action.payload,
+                isLoaded: false,
+            };
+        case "SET_IS_LOADING":
+            return {
+                ...state,
+                isLoaded: action.payload,
             };
         default:
             return state;

@@ -1,0 +1,33 @@
+.learn-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+   
+    
+}
+
+.learn {
+    display: flex;
+    margin-bottom: 200px;
+    flex-direction: column;
+    width: 500px;
+    height: 200px;
+    border-radius: 5px;
+    background-color: #ececec;
+    align-items: center;
+    justify-content: center;
+    &__item {
+        width: 85%;
+        margin-bottom: 1px;
+        label {
+            width: 425px;
+        }
+    }
+    &__button {
+        margin-top: 20px;
+        width: 425px;
+        height: 35px;
+    }
+}
