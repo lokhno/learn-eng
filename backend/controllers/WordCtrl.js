@@ -26,7 +26,7 @@ class WordCtrl {
             .populate(["category", "author"])
             .exec(function (err, messages) {
                 if (err) {
-                    return res.status(404).json({ message: `Message not found` });
+                    return res.status(404).json({ message: `Word not found` });
                 }
                 return res.json(messages);
             });
@@ -35,11 +35,11 @@ class WordCtrl {
         const id = req.params.id;
         WordModel.findOne({ _id: id })
             .populate(["category", "author"])
-            .exec(function (err, messages) {
+            .exec(function (err, word) {
                 if (err) {
-                    return res.status(404).json({ message: `Message not found` });
+                    return res.status(404).json({ message: `Word not found` });
                 }
-                return res.json(messages);
+                return res.json(word);
             });
     };
     delete = (req, res) => {

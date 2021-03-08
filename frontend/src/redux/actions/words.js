@@ -36,8 +36,8 @@ const actions = {
                 dispatch(actions.setIsLoading(false));
             });
     },
-    fetchAddWord: (item) => (dispatch) => {
-        wordsApi.createWord(item).then(({ data }) => {
+    fetchAddWord: (item, userId) => (dispatch) => {
+        wordsApi.createWord(item, userId).then(({ data }) => {
             wordsApi.getWordById(data._id).then(({ data }) => {
                 dispatch(actions.addWord(data));
             });

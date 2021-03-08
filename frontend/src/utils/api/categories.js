@@ -1,14 +1,15 @@
 import axios from "axios";
 
+axios.defaults.headers.common["token"] = window.localStorage.token;
+
 const categoriesApi = {
-    // 'http://localhost:3001/word/60414c9fdeefc965c8df5b6a'
     getAllByUserId: (id) => {
         return axios.get("http://localhost:3001/category/" + id);
     },
-    createCategory: ({ title }) => {
+    createCategory: ({ title }, userId) => {
         return axios.post("http://localhost:3001/category/", {
             title: title,
-            author_id: "60414c9fdeefc965c8df5b6a",
+            author_id: userId,
         });
     },
     deleteCategory: (id) => {

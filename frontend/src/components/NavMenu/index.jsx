@@ -15,6 +15,7 @@ function NavMenu() {
             ? ["3"]
             : ["1"]
     );
+
     return (
         <Header className="header">
             <div className="header__logo-menu">

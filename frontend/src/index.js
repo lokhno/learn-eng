@@ -6,6 +6,9 @@ import store from "./redux/store";
 import "antd/dist/antd.css";
 
 import App from "./App";
+import { userActions } from "./redux/actions";
+
+store.dispatch(userActions.fetchUserData());
 
 ReactDOM.render(
     <Provider store={store}>

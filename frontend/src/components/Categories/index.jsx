@@ -22,11 +22,14 @@ const Categories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [titleInForm, setTitleInForm] = useState("");
     useEffect(() => {
-        dispatch(categoriesActions.fetchCategories("60414c9fdeefc965c8df5b6a"));
+        dispatch(categoriesActions.fetchCategories(user[0]._id));
     }, []);
 
     const categories = useSelector(({ categories }) => {
         return categories.items;
+    });
+    const user = useSelector(({ user }) => {
+        return user.data;
     });
 
     const formFields = [
@@ -51,9 +54,13 @@ const Categories = () => {
 
     const addCategory = () => {
         dispatch(
-            categoriesActions.fetchAddCategories({
-                title: formFields.filter((item) => item.key == "title")[0].valueInForm,
-            })
+            categoriesActions.fetchAddCategories(
+                {
+                    title: formFields.filter((item) => item.key == "title")[0]
+                        .valueInForm,
+                },
+                user[0]._id
+            )
         );
     };
 

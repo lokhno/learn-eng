@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
 import { DataTable, DataTableControlPanel, Button } from "../";
-import { wordsActions, categoriesActions } from "../../redux/actions";
+import { wordsActions, categoriesActions, userActions } from "../../redux/actions";
 
 import "./Words.scss";
 
@@ -17,11 +17,13 @@ const Words = () => {
     const [categoryInForm, setCategoryInForm] = useState("");
     const [isOpenItemsRus, setIsOpenItemsRus] = useState(false);
     const [isOpenItemsEng, setIsOpenItemsEng] = useState(false);
-
+    const user = useSelector(({ user }) => {
+        return user.data;
+    });
     useEffect(() => {
-        dispatch(wordsActions.fetchWords("60414c9fdeefc965c8df5b6a"));
-        dispatch(categoriesActions.fetchCategories("60414c9fdeefc965c8df5b6a"));
-    }, []);
+        user && dispatch(wordsActions.fetchWords(user[0]._id));
+        user && dispatch(categoriesActions.fetchCategories(user[0]._id));
+    }, [user]);
 
     const words = useSelector(({ words }) => {
         return words.items;
@@ -157,14 +159,17 @@ const Words = () => {
 
     const addWord = () => {
         dispatch(
-            wordsActions.fetchAddWord({
-                engWord: formFields.filter((item) => item.key == "engWord")[0]
-                    .valueInForm,
-                rusWord: formFields.filter((item) => item.key == "rusWord")[0]
-                    .valueInForm,
-                category_id: formFields.filter((item) => item.key == "category")[0]
-                    .valueInForm,
-            })
+            wordsActions.fetchAddWord(
+                {
+                    engWord: formFields.filter((item) => item.key == "engWord")[0]
+                        .valueInForm,
+                    rusWord: formFields.filter((item) => item.key == "rusWord")[0]
+                        .valueInForm,
+                    category_id: formFields.filter((item) => item.key == "category")[0]
+                        .valueInForm,
+                },
+                user[0]._id
+            )
         );
     };
 

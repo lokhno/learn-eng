@@ -19,8 +19,8 @@ const actions = {
         type: "SET_IS_LOADING",
         payload: bool,
     }),
-    fetchAddCategories: (item) => (dispatch) => {
-        categoriesApi.createCategory(item).then(({ data }) => {
+    fetchAddCategories: (item, userId) => (dispatch) => {
+        categoriesApi.createCategory(item, userId).then(({ data }) => {
             dispatch(actions.addCategory(data));
         });
     },
