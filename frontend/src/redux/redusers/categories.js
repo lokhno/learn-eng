@@ -3,7 +3,6 @@ const initialState = {
         // { _id: 1, title: "Фразовые глаголы", key: 1 },
         // { _id: 2, title: "Новые", key: 2 },
     ],
-    nextId: 3,
     isLoaded: false,
 };
 
@@ -27,12 +26,10 @@ export default (state = initialState, action) => {
                 items: [
                     ...state.items,
                     {
-                        _id: state.nextId,
-                        key: state.nextId,
                         title: action.payload.title,
+                        _id: action.payload._id,
                     },
                 ],
-                nextId: state.nextId + 1,
             };
         case "DELETE_CATEGORIES":
             return {
@@ -46,7 +43,6 @@ export default (state = initialState, action) => {
                     ...excludeItems(state, action.payload.selectedCategories),
                     {
                         _id: action.payload.selectedCategories[0],
-                        key: action.payload.selectedCategories[0],
                         title: action.payload.item.title,
                     },
                 ],

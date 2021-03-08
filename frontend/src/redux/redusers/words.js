@@ -3,7 +3,6 @@ const initialState = {
         // { _id: 1, engWord: "age", rusWord: "возраст", key: 1, category: 1 },
         // { _id: 2, engWord: "figure out", rusWord: "понимать", key: 2, category: 1 },
     ],
-    nextId: 3,
     isLoaded: false,
 };
 
@@ -27,14 +26,12 @@ export default (state = initialState, action) => {
                 items: [
                     ...state.items,
                     {
-                        _id: state.nextId,
-                        key: state.nextId,
+                        _id: action.payload._id,
                         category: action.payload.category,
                         engWord: action.payload.engWord,
                         rusWord: action.payload.rusWord,
                     },
                 ],
-                nextId: state.nextId + 1,
             };
         case "DELETE_WORDS":
             return {

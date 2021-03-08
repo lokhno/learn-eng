@@ -59,10 +59,11 @@ const Categories = () => {
 
     const editCategory = () => {
         dispatch(
-            categoriesActions.editCategory(
+            categoriesActions.fetchEditCategory(
                 {
                     title: formFields.filter((item) => item.key == "title")[0]
                         .valueInForm,
+                    _id: selectedCategories[0],
                 },
                 selectedCategories
             )

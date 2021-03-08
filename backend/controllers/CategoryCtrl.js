@@ -19,12 +19,14 @@ class CategoryCtrl {
     };
     read = (req, res) => {
         const id = req.params.userid;
-        CategoryModel.find({ author: id }).populate(["author"]).exec(function (err, messages) {
-            if (err) {
-                return res.status(404).json({ message: `Message not found` });
-            }
-            return res.json(messages);
-        });
+        CategoryModel.find({ author: id })
+            .populate(["author"])
+            .exec(function (err, messages) {
+                if (err) {
+                    return res.status(404).json({ message: `Message not found` });
+                }
+                return res.json(messages);
+            });
     };
     delete = (req, res) => {
         const id = req.params.id;
@@ -40,11 +42,12 @@ class CategoryCtrl {
     };
     update = (req, res) => {
         const attribute = Object.keys(req.body)[0];
-     
+
         const data = {};
         data[attribute] = req.body[attribute];
+        data.edit_on = new Date();
         const id = req.params.id;
-       
+
         CategoryModel.findOneAndUpdate({ _id: id }, data)
             .then((message) => {
                 res.json(message);

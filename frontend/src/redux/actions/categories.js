@@ -26,9 +26,14 @@ const actions = {
     },
     fetchDeleteCategory: (ids) => (dispatch) => {
         ids.forEach((id) => {
-            categoriesApi.deleteCategory(id).then(({ data }) => {
+            categoriesApi.deleteCategory(id).then(() => {
                 dispatch(actions.deleteCategories([id]));
             });
+        });
+    },
+    fetchEditCategory: (item, selectedCategories) => (dispatch) => {
+        categoriesApi.editCagegory(item).then(() => {
+            dispatch(actions.editCategory(item, selectedCategories));
         });
     },
     fetchCategories: (userId) => (dispatch) => {

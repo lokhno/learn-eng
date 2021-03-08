@@ -14,5 +14,10 @@ const categoriesApi = {
     deleteCategory: (id) => {
         return axios.delete("http://localhost:3001/category/" + id);
     },
+    editCagegory: (item) => {
+        return axios.post("http://localhost:3001/category/update/" + item._id, {
+            ...item,
+        });
+    },
 };
 export default categoriesApi;

@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
 import { DataTable, DataTableControlPanel, Button } from "../";
-import { wordsActions } from "../../redux/actions";
+import { wordsActions, categoriesActions } from "../../redux/actions";
 
 import "./Words.scss";
 
@@ -20,6 +20,7 @@ const Words = () => {
 
     useEffect(() => {
         dispatch(wordsActions.fetchWords("60414c9fdeefc965c8df5b6a"));
+        dispatch(categoriesActions.fetchCategories("60414c9fdeefc965c8df5b6a"));
     }, []);
 
     const words = useSelector(({ words }) => {
@@ -156,27 +157,36 @@ const Words = () => {
 
     const addWord = () => {
         dispatch(
-            wordsActions.addWord({
+            wordsActions.fetchAddWord({
                 engWord: formFields.filter((item) => item.key == "engWord")[0]
                     .valueInForm,
                 rusWord: formFields.filter((item) => item.key == "rusWord")[0]
                     .valueInForm,
-                category: formFields.filter((item) => item.key == "category")[0]
+                category_id: formFields.filter((item) => item.key == "category")[0]
                     .valueInForm,
             })
         );
     };
 
     const editWord = () => {
+        const getValue = (inputKey) => {
+            let value = "";
+            let field = formFields.filter((item) => item.key == inputKey)[0].valueInForm;
+            if (field[inputKey]) {
+                value = field[inputKey];
+            } else {
+                value = field;
+            }
+            return value;
+        };
+
         dispatch(
-            wordsActions.editWord(
+            wordsActions.fetchEditWord(
                 {
-                    engWord: formFields.filter((item) => item.key == "engWord")[0]
-                        .valueInForm,
-                    rusWord: formFields.filter((item) => item.key == "rusWord")[0]
-                        .valueInForm,
-                    category: formFields.filter((item) => item.key == "category")[0]
-                        .valueInForm,
+                    engWord: getValue("engWord"),
+                    rusWord: getValue("rusWord"),
+                    category: getValue("category"),
+                    _id: selectedWords[0],
                 },
                 selectedWords
             )
@@ -185,7 +195,7 @@ const Words = () => {
     };
 
     const deleteWords = () => {
-        dispatch(wordsActions.deleteWords(selectedWords));
+        dispatch(wordsActions.fetchDeleteWord(selectedWords));
         setSelectedWords([]);
     };
 

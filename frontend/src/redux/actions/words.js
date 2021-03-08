@@ -36,6 +36,27 @@ const actions = {
                 dispatch(actions.setIsLoading(false));
             });
     },
+    fetchAddWord: (item) => (dispatch) => {
+        wordsApi.createWord(item).then(({ data }) => {
+            wordsApi.getWordById(data._id).then(({ data }) => {
+                dispatch(actions.addWord(data));
+            });
+        });
+    },
+    fetchDeleteWord: (ids) => (dispatch) => {
+        ids.forEach((id) => {
+            wordsApi.deleteWord(id).then(() => {
+                dispatch(actions.deleteWords([id]));
+            });
+        });
+    },
+    fetchEditWord: (item, selectedWords) => (dispatch) => {
+        wordsApi.editWord(item).then(({ data }) => {
+            wordsApi.getWordById(data._id).then(({ data }) => {
+                dispatch(actions.editWord(data, selectedWords));
+            });
+        });
+    },
 };
 
 export default actions;
