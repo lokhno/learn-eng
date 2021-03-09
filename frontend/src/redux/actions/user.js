@@ -7,25 +7,34 @@ const actions = {
     }),
 
     fetchUserData: () => (dispatch) => {
-        userApi.getMe().then(({ data }) => {
-            dispatch(actions.setUserData(data));
-        });
+        userApi
+            .getMe()
+            .then(({ data }) => {
+                dispatch(actions.setUserData(data));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
+
+    logout: () => ({
+        type: "USER:LOGOUT",
+    }),
 
     fetchUserLogin: (postData) => (dispatch) => {
         return userApi
             .loginUser(postData)
             .then(({ data }) => {
                 const { accessToken } = data;
-
-                // window.axios.defaults.headers.common["token"] = token;
-                window.localStorage["token"] = accessToken;
-                dispatch(actions.fetchUserData());
+                if (data.message === "Success") {
+                    window.localStorage["token"] = accessToken;
+                    dispatch(actions.fetchUserData());
+                }
 
                 return data;
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
             });
     },
 };

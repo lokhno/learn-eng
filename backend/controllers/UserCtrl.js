@@ -41,7 +41,7 @@ class UserCtrl {
 
     getMe = (req, res) => {
         const id = req.user;
-        UserModel.find({ _id: id }).exec(function (err, user) {
+        UserModel.findOne({ _id: id }).exec(function (err, user) {
             if (err) {
                 return res.status(404).json({ message: `User not found` });
             }
@@ -51,12 +51,12 @@ class UserCtrl {
 
     login = (req, res) => {
         const email = req.body.email;
+
         UserModel.findOne({ email: email }).exec(async (err, user) => {
             if (err) {
                 return res.status(404).json({ message: `User not found` });
             }
             if (user) {
-
                 try {
                     const checkPassword = await bcrypt.compare(
                         req.body.password,
@@ -70,11 +70,13 @@ class UserCtrl {
                         );
                         res.json({ message: "Success", accessToken, user });
                     } else {
-                        res.send("Not allowd");
+                        res.json({ message: "Not allowd" });
                     }
                 } catch (error) {
                     res.status(500).json({ status: "error", error });
                 }
+            } else {
+                res.json({ message: "Not allowd" });
             }
         });
     };

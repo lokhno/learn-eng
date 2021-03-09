@@ -22,7 +22,7 @@ const Categories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [titleInForm, setTitleInForm] = useState("");
     useEffect(() => {
-        dispatch(categoriesActions.fetchCategories(user[0]._id));
+        dispatch(categoriesActions.fetchCategories(user._id));
     }, []);
 
     const categories = useSelector(({ categories }) => {
@@ -59,7 +59,7 @@ const Categories = () => {
                     title: formFields.filter((item) => item.key == "title")[0]
                         .valueInForm,
                 },
-                user[0]._id
+                user._id
             )
         );
     };

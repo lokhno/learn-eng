@@ -6,6 +6,7 @@ import { Form, Input, Button } from "antd";
 import { Layout } from "antd";
 
 import { userActions } from "../../redux/actions";
+import openNotification from "../../utils/helpers/openNotification";
 
 import "./Auth.scss";
 
@@ -47,9 +48,13 @@ function Auth() {
                                 })
                             ).then((info) => {
                                 if (info.message === "Success") {
+                                    openNotification('success', "Акторизация прошла успешно!")
                                     setTimeout(() => {
-                                        window.location.href = 'http://localhost:3000/';
+                                        window.location.href = "http://localhost:3000/";
                                     }, 1000);
+                                } else {
+                                    openNotification('error', "Неверный логин или пароль!")
+
                                 }
                             });
                         }}

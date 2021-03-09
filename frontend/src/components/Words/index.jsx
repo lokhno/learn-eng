@@ -21,8 +21,8 @@ const Words = () => {
         return user.data;
     });
     useEffect(() => {
-        user && dispatch(wordsActions.fetchWords(user[0]._id));
-        user && dispatch(categoriesActions.fetchCategories(user[0]._id));
+        user && dispatch(wordsActions.fetchWords(user._id));
+        user && dispatch(categoriesActions.fetchCategories(user._id));
     }, [user]);
 
     const words = useSelector(({ words }) => {
@@ -168,7 +168,7 @@ const Words = () => {
                     category_id: formFields.filter((item) => item.key == "category")[0]
                         .valueInForm,
                 },
-                user[0]._id
+                user._id
             )
         );
     };

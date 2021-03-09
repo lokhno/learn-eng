@@ -13,6 +13,12 @@ export default (state = initialState, action) => {
                 isAuth: true,
                 token: window.localStorage.token,
             };
+        case "USER:LOGOUT":
+            return {
+                data: null,
+                isAuth: false,
+                token: "",
+            };
 
         default:
             return state;

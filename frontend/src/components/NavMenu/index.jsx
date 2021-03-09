@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 import { Menu, Layout } from "antd";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { userActions } from "../../redux/actions";
 
 import "./NavMenu.scss";
 
 const { Header } = Layout;
 
 function NavMenu() {
+    const dispatch = useDispatch();
     const [selectedMenuItem, setSelectedMenuItem] = useState(
         window.location.pathname.includes("categories")
             ? ["2"]
@@ -51,9 +55,15 @@ function NavMenu() {
                 </Menu>
             </div>
             <div>
-                <Link className="header__logo" to="/auth">
+                <div
+                    className="header__logout"
+                    onClick={() => {
+                        window.localStorage.token = "";
+                        dispatch(userActions.logout());
+                    }}
+                >
                     Выйти
-                </Link>
+                </div>
             </div>
         </Header>
     );

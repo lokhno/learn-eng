@@ -11,6 +11,16 @@
         display: inline;
         padding: 0 20px;
     }
+    &__logout {
+        color: #fff;
+        font-size: 20px;
+        display: inline;
+        padding: 0 20px;
+        cursor: pointer;
+    }
+    &__logout:hover {
+        color: #40a9ff;
+    }
 
     &__menu {
         a {

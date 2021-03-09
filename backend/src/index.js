@@ -23,7 +23,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 UserRoutes(app);
 WordRoutes(app);
 CategoryRoutes(app);
+const PORT = process.env.PORT || 3001;
 
-app.listen(3001, function () {
-    console.log("Example app listening on port 3001!");
+app.listen(PORT, function () {
+    console.log(`Example app listening on port ${PORT}!`);
 });
