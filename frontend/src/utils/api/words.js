@@ -5,7 +5,7 @@ axios.defaults.headers.common["token"] = window.localStorage.token;
 const wordsApi = {
 
     getAllByUserId: (id) => {
-        return axios.get("http://localhost:3001/word/" + id);
+        return axios.get("/word/" + id);
     },
     createWord: (item, userId) => {
         const attributes = Object.keys(item);
@@ -13,21 +13,21 @@ const wordsApi = {
         attributes.forEach((attr) => {
             data[attr] = item[attr];
         });
-        return axios.post("http://localhost:3001/word/", {
+        return axios.post("/word/", {
             ...data,
             author_id: userId,
         });
     },
     deleteWord: (id) => {
-        return axios.delete("http://localhost:3001/word/" + id);
+        return axios.delete("/word/" + id);
     },
     editWord: (item) => {
-        return axios.post("http://localhost:3001/word/update/" + item._id, {
+        return axios.post("/word/update/" + item._id, {
             ...item,
         });
     },
     getWordById: (id) => {
-        return axios.get("http://localhost:3001/word/index/" + id);
+        return axios.get("/word/index/" + id);
     },
 };
 export default wordsApi;

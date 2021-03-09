@@ -23,8 +23,18 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 UserRoutes(app);
 WordRoutes(app);
 CategoryRoutes(app);
-const PORT = process.env.PORT || 3001;
 
+
+if (process.env.NODE_ENV === "production") {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, "../../frontend/build")));
+    // Handle React routing, return all requests to React app
+    app.get("*", function (req, res) {
+        res.sendFile(path.join(__dirname, "../../frontend/build", "index.html"));
+    });
+}
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {
     console.log(`Example app listening on port ${PORT}!`);
 });

@@ -4,19 +4,19 @@ axios.defaults.headers.common["token"] = window.localStorage.token;
 
 const categoriesApi = {
     getAllByUserId: (id) => {
-        return axios.get("http://localhost:3001/category/" + id);
+        return axios.get("/category/" + id);
     },
     createCategory: ({ title }, userId) => {
-        return axios.post("http://localhost:3001/category/", {
+        return axios.post("/category/", {
             title: title,
             author_id: userId,
         });
     },
     deleteCategory: (id) => {
-        return axios.delete("http://localhost:3001/category/" + id);
+        return axios.delete("/category/" + id);
     },
     editCagegory: (item) => {
-        return axios.post("http://localhost:3001/category/update/" + item._id, {
+        return axios.post("/category/update/" + item._id, {
             ...item,
         });
     },

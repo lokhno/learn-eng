@@ -50,7 +50,7 @@ function Auth() {
                                 if (info.message === "Success") {
                                     openNotification('success', "Акторизация прошла успешно!")
                                     setTimeout(() => {
-                                        window.location.href = "http://localhost:3000/";
+                                        // window.location.href = "/";
                                     }, 1000);
                                 } else {
                                     openNotification('error', "Неверный логин или пароль!")
