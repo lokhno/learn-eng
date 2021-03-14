@@ -3,7 +3,6 @@ import axios from "axios";
 axios.defaults.headers.common["token"] = window.localStorage.token;
 
 const userApi = {
-
     createUser: (data) => {
         return axios.post("/users/", {
             user_name: data.user_name,
@@ -20,7 +19,7 @@ const userApi = {
         return axios.get("/users/" + id);
     },
     getMe: () => {
-        return axios.get("/users/me");
+        return axios.get("/users/me", { headers: { token: window.localStorage.token } });
     },
 };
 export default userApi;

@@ -2,6 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 
 import { UserRoutes, WordRoutes, CategoryRoutes } from "../routes/index.js";
+import dotenv from "dotenv";
+import path from "path";
+const __dirname = path.resolve();
+
+if (!process?.env?.LEARNENGADMIN_PASSWORD) {
+    dotenv.config();
+}
 
 var app = express();
 app.use(express.json());
@@ -14,8 +21,18 @@ app.use(function (req, res, next) {
     );
     next();
 });
-var mongoDB = "mongodb://localhost:27017/learn-eng";
-mongoose.connect(mongoDB);
+
+var mongoDB = `mongodb+srv://learnEngAdmin:${process.env.LEARNENGADMIN_PASSWORD}@learn-eng.t9qji.mongodb.net/learn-eng?retryWrites=true&w=majority`;
+console.log("mongoDB connection string: " + mongoDB);
+mongoose
+    .connect(mongoDB, { useNewUrlParser: true })
+    .then(() => {
+        console.log("MongoDB connected");
+        console.log("__dirname ", __dirname);
+    })
+    .catch((err) => {
+        console.log("ОШИБКА", err);
+    });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -24,18 +41,11 @@ UserRoutes(app);
 WordRoutes(app);
 CategoryRoutes(app);
 
-app.get("/", function (req, res) {
-    res.send('hello to api')
-});
+app.use(express.static("client"));
 
-// if (process.env.NODE_ENV === "production") {
-//     // Serve any static files
-//     app.use(express.static(path.join(__dirname, "../../frontend/build")));
-//     // Handle React routing, return all requests to React app
-//     app.get("*", function (req, res) {
-//         res.sendFile(path.join(__dirname, "../../frontend/build", "index.html"));
-//     });
-// }
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "index.html"));
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, function () {

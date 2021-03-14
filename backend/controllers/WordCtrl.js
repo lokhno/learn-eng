@@ -21,6 +21,7 @@ class WordCtrl {
             });
     };
     read = (req, res) => {
+        console.log("read")
         const id = req.params.userid;
         WordModel.find({ author: id })
             .populate(["category", "author"])
