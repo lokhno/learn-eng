@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+    PlusCircleOutlined,
+    EditOutlined,
+    DeleteOutlined,
+    EyeOutlined,
+    EyeInvisibleOutlined,
+} from "@ant-design/icons";
 import classnames from "classnames";
 
 import { Button, Forms } from "../";
@@ -12,6 +18,8 @@ function DataTableControlPanel({
     onEdit,
     selectedItems,
     formFields,
+    handleisShuffled,
+    isShuffled,
 }) {
     const [overlayHidden, setOverlayHidden] = useState(true);
     const [formType, setFormType] = useState("");
@@ -69,6 +77,15 @@ function DataTableControlPanel({
                 type="primary"
                 icon={<DeleteOutlined />}
                 onClick={onDelete}
+            />
+            <Button
+                className="words__add"
+                name={!isShuffled ? "Перемешать" : "Вернуть"}
+                type="primary"
+                icon={!isShuffled ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                onClick={() => {
+                    handleisShuffled(!isShuffled);
+                }}
             />
         </div>
     );

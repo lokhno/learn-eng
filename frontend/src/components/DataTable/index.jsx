@@ -1,12 +1,21 @@
 import React from "react";
-import { Table, Input } from "antd";
+import { Table, Input, ConfigProvider  } from "antd";
+
 
 import EditableCell from "./EditableCell";
 import EditableRow from "./EditableRow";
 
 import "./DataTable.scss";
 
-const DataTable = ({ columns, data, selectedItems, setSelectedItems, isOpenItems }) => {
+const DataTable = ({
+    columns,
+    data,
+    selectedItems,
+    setSelectedItems,
+    isOpenItems,
+    onChange,
+}) => {
+    console.log("data", data)
     const components = {
         body: {
             row: EditableRow,
@@ -32,24 +41,37 @@ const DataTable = ({ columns, data, selectedItems, setSelectedItems, isOpenItems
         };
     });
     return (
-        <Table
-            components={isOpenItems ? components : false}
-            bordered
-            className="content"
-            rowKey="_id"
-            rowSelection={{
-                selectedRowKeys: selectedItems,
-                type: "checkbox",
-                onChange: (selectedRowKeys) => {
-                    setSelectedItems(selectedRowKeys);
+        <ConfigProvider 
+            locale={{
+                Table: {
+                    filterConfirm: "OK",
+                    filterReset: "Сбросить",
+                },
+                Empty: {
+                    description: "Нет данных",
                 },
             }}
-            columns={newcolumns}
-            dataSource={data}
-            pagination={{
-                defaultPageSize: 20,
-            }}
-        />
+        >
+            <Table
+                components={isOpenItems ? components : false}
+                bordered
+                className="content"
+                rowKey="_id"
+                rowSelection={{
+                    selectedRowKeys: selectedItems,
+                    type: "checkbox",
+                    onChange: (selectedRowKeys) => {
+                        setSelectedItems(selectedRowKeys);
+                    },
+                }}
+                columns={newcolumns}
+                dataSource={data}
+                pagination={{
+                    defaultPageSize: 20,
+                }}
+                onChange={onChange}
+            />
+        </ConfigProvider >
     );
 };
 

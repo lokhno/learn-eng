@@ -48,13 +48,18 @@ function Auth() {
                                 })
                             ).then((info) => {
                                 if (info.message === "Success") {
-                                    openNotification('success', "Акторизация прошла успешно!")
+                                    openNotification(
+                                        "success",
+                                        "Акторизация прошла успешно!"
+                                    );
                                     setTimeout(() => {
                                         // window.location.href = "/";
                                     }, 1000);
                                 } else {
-                                    openNotification('error', "Неверный логин или пароль!")
-
+                                    openNotification(
+                                        "error",
+                                        "Неверный логин или пароль!"
+                                    );
                                 }
                             });
                         }}

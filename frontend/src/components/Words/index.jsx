@@ -17,6 +17,9 @@ const Words = () => {
     const [categoryInForm, setCategoryInForm] = useState("");
     const [isOpenItemsRus, setIsOpenItemsRus] = useState(false);
     const [isOpenItemsEng, setIsOpenItemsEng] = useState(false);
+    const [filteredInfo, setFilteredInfo] = useState({});
+    const [isShuffled, setisShuffled] = useState(false);
+    const [shuffledWords, setShuffledWords] = useState([]);
     const user = useSelector(({ user }) => {
         return user.data;
     });
@@ -66,7 +69,7 @@ const Words = () => {
                     }
                 }
             },
-            width: "30%",
+            width: "32.5%",
         },
         {
             title: () => {
@@ -100,14 +103,27 @@ const Words = () => {
                     }
                 }
             },
-            width: "30%",
+            width: "32.5%",
         },
         {
             title: "Категория",
             dataIndex: ["category", "title"],
             key: "category",
+            filters: categories
+                ? categories.map((item) => {
+                      return { text: item.title, value: item.title };
+                  })
+                : [],
+            filteredValue: filteredInfo.category || null,
+            onFilter: (value, record) => record.category.title.includes(value),
+            ellipsis: true,
+            width: "32.5%",
         },
     ];
+
+    const handleChange = (pagination, filters) => {
+        setFilteredInfo(filters);
+    };
 
     const formFields = [
         {
@@ -203,7 +219,29 @@ const Words = () => {
         dispatch(wordsActions.fetchDeleteWord(selectedWords));
         setSelectedWords([]);
     };
-
+    //вспомогательная функция
+    function putToCache(elem, cache) {
+        if (cache.indexOf(elem) != -1) {
+            return;
+        }
+        var i = Math.floor(Math.random() * (cache.length + 1));
+        cache.splice(i, 0, elem);
+    }
+    //функция, возвращающая свеженький, девственный компаратор
+    function madness() {
+        var cache = [];
+        return function (a, b) {
+            putToCache(a, cache);
+            putToCache(b, cache);
+            return cache.indexOf(b) - cache.indexOf(a);
+        };
+    }
+    //собственно функция перемешивания
+    function shuffle(arr) {
+        var compare = madness();
+        return arr.sort(compare);
+    }
+    console.log(isShuffled);
     return (
         <Content>
             <DataTableControlPanel
@@ -213,13 +251,22 @@ const Words = () => {
                 onEdit={editWord}
                 selectedItems={selectedWords}
                 formFields={formFields}
+                handleisShuffled={(value) => {
+                    console.log("handleisShuffled", value)
+                    setisShuffled(value);
+                    if (value) {
+                        setShuffledWords(shuffle([...words]));
+                    }
+                }}
+                isShuffled={isShuffled}
             />
             <DataTable
                 columns={columns}
                 isOpenItems={isOpenItemsRus || isOpenItemsEng}
-                data={words}
+                data={!isShuffled ? words : shuffledWords}
                 selectedItems={selectedWords}
                 setSelectedItems={setSelectedWords}
+                onChange={handleChange}
             />
         </Content>
     );

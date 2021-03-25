@@ -6,6 +6,7 @@ import { Layout } from "antd";
 
 import { userApi } from "../../utils/api/index";
 import "./Registration.scss";
+import openNotification from "../../utils/helpers/openNotification";
 
 function Registration() {
     const [userName, setUserName] = useState("");
@@ -69,10 +70,13 @@ function Registration() {
                                     email: email,
                                     password: password,
                                 });
-
-                                console.log("Регистрация прошла успешно", user.data);
+                                openNotification('success', "Регистрация прошла успешно!")
+                                console.log("", user.data);
+                                setTimeout(() => {
+                                    window.location.href = "/";
+                                }, 1000);
                             } else {
-                                console.log("Не совпадают пароли!");
+                                openNotification('error', "Не совпадают пароли!")
                             }
                         }}
                     >
